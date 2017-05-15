@@ -24,10 +24,7 @@ spec:
         - name: EventBusConnection
           value: rabbitmq
         - name: IdentityUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: IdentityUrl
+          value: "http://identity"
         ports:
         - containerPort: 80
       - name: basket-data
@@ -63,10 +60,7 @@ spec:
         - name: EventBusConnection
           value: rabbitmq
         - name: ExternalCatalogBaseUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: CatalogUrl
+          value: "http://catalog"
         ports:
         - containerPort: 80
       imagePullSecrets:
@@ -96,15 +90,9 @@ spec:
         - name: ConnectionStrings__DefaultConnection
           value: "Server=sql-data;Initial Catalog=Microsoft.eShopOnContainers.Services.IdentityDb;User Id=sa;Password=Pass@word"
         - name: MvcClient
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: MvcClient
+          value: "http://webmvc"
         - name: SpaClient
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: SpaClient
+          value: "http://webspa"
         ports:
         - containerPort: 80
       imagePullSecrets:
@@ -136,10 +124,7 @@ spec:
         - name: EventBusConnection
           value: rabbitmq
         - name: IdentityUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: IdentityUrl
+          value: "http://identity"
         ports:
         - containerPort: 80
       imagePullSecrets:
@@ -167,30 +152,15 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         - name: BasketUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: BasketUrl
+          value: "http://basket"
         - name: CallBackUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: MvcClient
+          value: "http://webmvc"
         - name: CatalogUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: CatalogUrl
+          value: "http://catalog"
         - name: IdentityUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: IdentityUrl
+          value: "http://identity"
         - name: OrderingUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: OrderingUrl
+          value: "http://ordering"
         ports:
         - containerPort: 80
       imagePullSecrets:
@@ -218,30 +188,15 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         - name: BasketUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: BasketUrl
+          value: "http://basket"
         - name: CallBackUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: SpaClient
+          value: "http://webspa"
         - name: CatalogUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: CatalogUrl
+          value: "http://catalog"
         - name: IdentityUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: IdentityUrl
+          value: "http://identity"
         - name: OrderingUrl
-          valueFrom:
-           configMapKeyRef:
-             name: urls
-             key: OrderingUrl
+          value: "http://ordering"
         ports:
         - containerPort: 80
       imagePullSecrets:
