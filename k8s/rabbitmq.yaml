@@ -5,6 +5,7 @@ metadata:
     app: eshop
     component: rabbitmq
   name: rabbitmq
+  namespace: shop
 spec:
   ports:
   - port: 5672
@@ -16,6 +17,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: rabbitmq
+  namespace: shop
 spec:
   template:
     metadata:

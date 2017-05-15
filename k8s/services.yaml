@@ -5,6 +5,7 @@ metadata:
     app: eshop
     component: basket
   name: basket
+  namespace: shop
 spec:
   ports:
   - port: 80
@@ -19,6 +20,7 @@ metadata:
     app: eshop
     component: catalog
   name: catalog
+  namespace: shop
 spec:
   ports:
   - port: 80
@@ -33,6 +35,7 @@ metadata:
     app: eshop
     component: identity
   name: identity
+  namespace: shop
 spec:
   ports:
   - port: 80
@@ -47,6 +50,7 @@ metadata:
     app: eshop
     component: ordering
   name: ordering
+  namespace: shop
 spec:
   ports:
   - port: 80
@@ -61,6 +65,7 @@ metadata:
     app: eshop
     component: webmvc
   name: webmvc
+  namespace: shop
 spec:
   ports:
   - port: 80
@@ -75,6 +80,7 @@ metadata:
     app: eshop
     component: webspa
   name: webspa
+  namespace: shop
 spec:
   ports:
   - port: 80

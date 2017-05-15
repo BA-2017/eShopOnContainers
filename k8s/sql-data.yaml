@@ -1,10 +1,37 @@
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: shop
+  namespace: shop
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /kubernetes/mssql-shop
+    server: 172.21.21.201
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: shop
+  namespace: shop
+spec:
+  resources:
+    requests:
+      storage: 9Gi
+  accessModes:
+    - ReadWriteOnce
+---
+apiVersion: v1
 kind: Service
 metadata:
   labels:
     app: eshop
     component: sql-data
   name: sql-data
+  namespace: shop
 spec:
   ports:
   - port: 1433
@@ -16,6 +43,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: sql-data
+  namespace: shop
 spec:
   template:
     metadata:
@@ -25,9 +53,11 @@ spec:
     spec:
       containers:
       - name: sql-data
-        image: microsoft/mssql-server-linux:ctp1-3
+        image: microsoft/mssql-server-linux:ctp1-4
         env:
         - name: ACCEPT_EULA
           value: "Y"
         - name: SA_PASSWORD
           value: Pass@word
+        ports:
+        - containerPort: 1433

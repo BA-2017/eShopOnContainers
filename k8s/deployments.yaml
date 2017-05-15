@@ -2,8 +2,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: basket
+  namespace: shop
 spec:
-  paused: true
   template:
     metadata:
       labels:
@@ -12,11 +12,13 @@ spec:
     spec:
       containers:
       - name: basket
-        image: eshop/basket.api
+        image: registry.zhaw.tk:4443/eshop/basket.api
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_URLS
           value: http://0.0.0.0:80/basket-api
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
         - name: ConnectionString
           value: 127.0.0.1
         - name: EventBusConnection
@@ -39,8 +41,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: catalog
+  namespace: shop
 spec:
-  paused: true
   template:
     metadata:
       labels:
@@ -49,11 +51,13 @@ spec:
     spec:
       containers:
       - name: catalog
-        image: eshop/catalog.api
+        image: registry.zhaw.tk:4443/eshop/catalog.api
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_URLS
           value: http://0.0.0.0:80/catalog-api
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
         - name: ConnectionString
           value: "Server=sql-data;Initial Catalog=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word"
         - name: EventBusConnection
@@ -72,8 +76,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: identity
+  namespace: shop
 spec:
-  paused: true
   template:
     metadata:
       labels:
@@ -82,11 +86,13 @@ spec:
     spec:
       containers:
       - name: identity
-        image: eshop/identity.api
+        image: registry.zhaw.tk:4443/eshop/identity.api
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_URLS
           value: http://0.0.0.0:80/identity
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
         - name: ConnectionStrings__DefaultConnection
           value: "Server=sql-data;Initial Catalog=Microsoft.eShopOnContainers.Services.IdentityDb;User Id=sa;Password=Pass@word"
         - name: MvcClient
@@ -108,8 +114,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: ordering
+  namespace: shop
 spec:
-  paused: true
   template:
     metadata:
       labels:
@@ -118,11 +124,13 @@ spec:
     spec:
       containers:
       - name: ordering
-        image: eshop/ordering.api
+        image: registry.zhaw.tk:4443/eshop/ordering.api
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_URLS
           value: http://0.0.0.0:80/ordering-api
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
         - name: ConnectionString
           value: "Server=sql-data;Database=Microsoft.eShopOnContainers.Services.OrderingDb;User Id=sa;Password=Pass@word;"
         - name: EventBusConnection
@@ -141,8 +149,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: webmvc
+  namespace: shop
 spec:
-  paused: true
   template:
     metadata:
       labels:
@@ -151,11 +159,13 @@ spec:
     spec:
       containers:
       - name: webmvc
-        image: eshop/webmvc
+        image: registry.zhaw.tk:4443/eshop/webmvc
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_URLS
           value: http://0.0.0.0:80/webmvc
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
         - name: BasketUrl
           valueFrom:
            configMapKeyRef:
@@ -190,8 +200,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: webspa
+  namespace: shop
 spec:
-  paused: true
   template:
     metadata:
       labels:
@@ -200,11 +210,13 @@ spec:
     spec:
       containers:
       - name: webspa
-        image: eshop/webspa
+        image: registry.zhaw.tk:4443/eshop/webspa
         imagePullPolicy: Always
         env:
         - name: ASPNETCORE_URLS
           value: http://0.0.0.0:80
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
         - name: BasketUrl
           valueFrom:
            configMapKeyRef:

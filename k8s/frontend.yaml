@@ -1,47 +1,41 @@
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: eshop
-    component: frontend
-  name: frontend
-spec:
-  ports:
-  - port: 80
-    targetPort: 8080
-  selector:
-    app: eshop
-    component: frontend
-  type: LoadBalancer
----
+kind: Ingress
 apiVersion: extensions/v1beta1
-kind: Deployment
 metadata:
-  name: frontend
+  name: shop
+  namespace: shop
+  labels:
+    # let kube-cert-manager generate an SSL certificate
+    stable.k8s.psg.io/kcm.class: "default"
 spec:
-  template:
-    metadata:
-      labels:
-        app: eshop
-        component: frontend
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:1.11.10-alpine
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8080
-        lifecycle:
-          preStop:
-            exec:
-              command: ["/usr/sbin/nginx","-s","quit"]
-        volumeMounts:
-        - name: config
-          mountPath: /etc/nginx
-      volumes:
-      - name: config
-        configMap:
-          name: config-files
-          items:
-          - key: nginx-conf
-            path: nginx.conf
+  tls:
+  - hosts:
+    - shop.zhaw.tk
+    secretName: shop-tls-cert
+  rules:
+  - host: shop.zhaw.tk
+    http:
+      paths:
+      - path: /basket-api
+        backend:
+          serviceName: basket
+          servicePort: 80
+      - path: /catalog-api
+        backend:
+          serviceName: catalog
+          servicePort: 80
+      - path: /identity
+        backend:
+          serviceName: identity
+          servicePort: 80
+      - path: /ordering-api
+        backend:
+          serviceName: ordering
+          servicePort: 80
+      - path: /webmvc
+        backend:
+          serviceName: webmvc
+          servicePort: 80
+      - path: /
+        backend:
+          serviceName: webspa
+          servicePort: 80
